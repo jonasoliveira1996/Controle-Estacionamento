@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="utf-8">
+	<title>Controle de Estacionamento V1</title>
+	<link rel="stylesheet" type="text/css" href="style.css"> 
+</head>
+
+<!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+<body>
+	<h3 style="margin-bottom: 0;">Aplicação controle de estacionamento com Spring Boot REST API</h3>
+
+	<form action="" id="cadastroVagas" class="cadastroVagas">
+		
+		<h4 style="margin-bottom: 0">Registro de estacionamento</h4>
+		
+		<div class="mb-3">
+  		<label for="exampleFormControlInput1" class="form-label"></label>
+  		<input style="color: black;" type="number" class="form-control" id="id" readonly="readonly" placeholder="id">
+		</div>
+		
+		<div class="mb-3">
+  		<label for="exampleFormControlInput1" class="form-label"></label>
+  		<input style="color: black;" type="datetime" class="form-control" id="dataRegistro" readonly="readonly" placeholder="Data de Registro">
+		</div>
+		
+		<div class="mb-3">
+  		<label for="exampleFormControlInput1" class="form-label"></label>
+  		<input style="background-color: #222; color: white; padding: 10px" type="text" class="form-control" id="numeroVagaEstacionamento" placeholder="Número da vaga de estacionamento">
+		</div>
+		
+		<div class="mb-3">
+  		<label for="exampleFormControlInput1" class="form-label"></label>
+  		<input style="background-color: #222; color: white;" type="text" class="form-control" id="placaCarro" placeholder="Placa do carro">
+		</div>
+		
+		<div class="mb-3">
+  		<label for="exampleFormControlInput1" class="form-label"></label>
+  		<input style="background-color: #222; color: white;" type="text" class="form-control" id="marcaCarro" placeholder="Marca do carro">
+		</div>
+		
+		<div class="mb-3">
+  		<label for="exampleFormControlInput1" class="form-label"></label>
+  		<input style="background-color: #222; color: white;" type="text" class="form-control" id="modeloCarro" placeholder="Modelo do carro">
+		</div>
+		
+		<div class="mb-3">
+  		<label for="exampleFormControlInput1" class="form-label"></label>
+  		<input style="background-color: #222; color: white;" type="text" class="form-control" id="corCarro" placeholder="Cor do carro">
+		</div>
+		
+		<div class="mb-3">
+  		<label for="exampleFormControlInput1" class="form-label"></label>
+  		<input style="background-color: #222; color: white;" type="text" class="form-control" id="nomeResponsavel" placeholder="Nome do responsável">
+		</div>
+		
+		<div class="mb-3">
+  		<label for="exampleFormControlInput1" class="form-label"></label>
+  		<input style="background-color: #222; color: white;" type="text" class="form-control" id="apartamento" placeholder="Apartamento">
+		</div>
+		
+		<div class="mb-3">
+  		<label for="exampleFormControlInput1" class="form-label"></label>
+  		<input style="background-color: #222; color: white;" type="text" class="form-control" id="bloco" placeholder="Bloco">
+		</div>
+			
+		<div class="bts">
+		<button type="button" id="bts-principais" class="btn btn-primary" onclick="inserirRegistro()">Cadastrar Vaga</button>
+		<button type="button" id="bts-principais" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#pesquisaVaga">Pesquisar</button>
+		<button type="button" id="bts-principais" class="btn btn-warning" onclick="alterarRegistro()">Editar</button>
+		</div>
+		
+	</form>	
+	
+	<footer class="rodape"></footer>
+	
+	
+	<div class="modal fade" id="pesquisaVaga" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Pesquisa de cadastro de vagas</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Informe o nome do responsável:</label>
+            <input type="text" placeholder="Todos" class="form-control" id="nome">
+          </div>
+          <button type="button" class="btn btn-success" onclick="pesquisarPorNome()">Pesquisar</button>
+        </form>
+
+				<div style="height: 400px;overflow: scroll;">
+					<table class="table" id="tabelaBusca">
+						<thead>
+							<tr>
+								<th scope="col">ID</th>
+								<th scope="col">Nome do Responsável</th>
+								<th scope="col">Número da vaga de estacionamento</th>
+								<th scope="col">Editar</th>
+								<th scope="col">Deletar</th>
+							</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+					</table>
+				</div>
+
+				</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	
+<!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+	<script type="text/javascript">
+	
+		function pesquisarPorNome() {
+			var nomeResponsavel = $('#nome').val();
+			
+			if (nomeResponsavel != null && nomeResponsavel.trim() != '') {
+				$.ajax({
+					method: "GET",
+					url: "/estacionamento/buscarPorNome",
+					data: "nomeResponsavel=" + nomeResponsavel,
+					
+					success: function (response){
+						$('#tabelaBusca > tbody > tr').remove();
+						
+						for (var i = 0; i < response.length; i++) {
+							$('#tabelaBusca > tbody').append('<tr id="'+response[i].id+'"><td>'+response[i].id+'</td><td>'+response[i].nomeResponsavel+'</td><td>'+response[i].numeroVagaEstacionamento+'</td><td><button type="button" class="btn btn-primary" onclick="pesquisarPorId('+response[i].id+')">Ver</button></td><td><button type="button" class="btn btn-danger" onclick="deletarPorId('+response[i].id+')">Deletar</button></td></tr>');						}
+					}
+				}).fail(function (xhr, status, errorThrown) {
+					alert ("Erro ao buscar vaga por nome: " + xhr.responseText);
+				});
+			} else {
+				$.ajax({
+					method: "GET",
+					url: "/estacionamento",
+					
+					success: function (response){
+						$('#tabelaBusca > tbody > tr').remove();
+						
+						for (var i = 0; i < response.length; i++) {
+							$('#tabelaBusca > tbody').append('<tr id="'+response[i].id+'"><td>'+response[i].id+'</td><td>'+response[i].nomeResponsavel+'</td><td>'+response[i].numeroVagaEstacionamento+'</td><td><button type="button" class="btn btn-primary" onclick="pesquisarPorId('+response[i].id+')">Ver</button></td><td><button type="button" class="btn btn-danger" onclick="deletarPorId('+response[i].id+')">Deletar</button></td></tr>');						}
+					}
+				}).fail(function (xhr, status, errorThrown) {
+					alert ("Erro ao buscar vaga por nome: " + xhr.responseText);
+				});
+			}
+		}
+		
+		function pesquisarPorId(id) {
+			
+			$.ajax({
+				method: "GET",
+				url: "/estacionamento/buscarPorId",
+				data: "id=" + id,
+				
+				success: function (response){
+					
+					id = $("#id").val(response.id);
+					dataRegistro = $("#dataRegistro").val(response.dataRegistro);
+					numeroVagaEstacionamento = $("#numeroVagaEstacionamento").val(response.numeroVagaEstacionamento); 
+					placaCarro = $("#placaCarro").val(response.placaCarro);
+					marcaCarro = $("#marcaCarro").val(response.marcaCarro);
+					modeloCarro = $("#modeloCarro").val(response.modeloCarro);
+					corCarro = $("#corCarro").val(response.corCarro);
+					nomeResponsavel = $("#nomeResponsavel").val(response.nomeResponsavel);
+					apartamento = $("#apartamento").val(response.apartamento);
+					bloco = $("#bloco").val(response.bloco);
+					
+					$('#pesquisaVaga').modal('hide');
+				}
+			}).fail(function (xhr, status, errorThrown) {
+				alert ("Erro ao buscar vaga por id: " + xhr.responseText);
+			});
+		
+		}
+		
+		function inserirRegistro(){
+			
+			var numeroVagaEstacionamento = $("#numeroVagaEstacionamento").val(); 
+			var placaCarro = $("#placaCarro").val();
+			var marcaCarro = $("#marcaCarro").val();
+			var modeloCarro = $("#modeloCarro").val();
+			var corCarro = $("#corCarro").val();
+			var nomeResponsavel = $("#nomeResponsavel").val();
+			var apartamento = $("#apartamento").val();
+			var bloco = $("#bloco").val();
+			
+			$.ajax({
+				method: "POST",
+				url: "/estacionamento/cadastrar",
+				data: JSON.stringify({numeroVagaEstacionamento : numeroVagaEstacionamento, placaCarro : placaCarro, marcaCarro : marcaCarro, 
+					modeloCarro : modeloCarro, corCarro : corCarro, nomeResponsavel : nomeResponsavel, apartamento : apartamento,
+					apartamento : apartamento, bloco : bloco}),
+				contentType: "application/json; charset-utf-8",
+				success: function (response){
+					alert("Cadastrou com sucesso")
+					document.getElementById("cadastroVagas").reset();
+				}
+			}).fail(function (xhr, status, errorThrown) {
+				alert ("Erro ao cadastrar vaga: " + xhr.responseText);
+			});
+		}
+		
+		function deletarPorId(id) {
+			
+			$.ajax({
+				method: "DELETE",
+				url: "/estacionamento/deletarPorId",
+				data: "id=" + id,
+				
+				success: function (response){
+					
+					$('#'+ id).remove();
+					
+					alert(response);
+					
+				}
+			}).fail(function (xhr, status, errorThrown) {
+				alert ("Erro ao deletar vaga por id: " + xhr.responseText);
+			});
+		}
+		
+		function alterarRegistro(){
+			
+			var id = $("#id").val();
+			
+			if(id != null && id.trim() != ''){				
+			
+			var numeroVagaEstacionamento = $("#numeroVagaEstacionamento").val(); 
+			var placaCarro = $("#placaCarro").val();
+			var marcaCarro = $("#marcaCarro").val();
+			var modeloCarro = $("#modeloCarro").val();
+			var corCarro = $("#corCarro").val();
+			var nomeResponsavel = $("#nomeResponsavel").val();
+			var apartamento = $("#apartamento").val();
+			var bloco = $("#bloco").val();
+			
+			$.ajax({
+				method: "PUT",
+				url: "/estacionamento/editar",
+				data: JSON.stringify({id : id, numeroVagaEstacionamento : numeroVagaEstacionamento, placaCarro : placaCarro, marcaCarro : marcaCarro, 
+					modeloCarro : modeloCarro, corCarro : corCarro, nomeResponsavel : nomeResponsavel, apartamento : apartamento,
+					apartamento : apartamento, bloco : bloco}),
+				contentType: "application/json; charset-utf-8",
+				success: function (response){
+					alert("Registro alterado com sucesso")
+					document.getElementById("cadastroVagas").reset();
+				}
+			}).fail(function (xhr, status, errorThrown) {
+				alert ("Erro ao alterar registro: " + xhr.responseText);
+			});
+		}
+	}
+		
+	</script>
+
+</body>	
+</html>

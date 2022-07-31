@@ -1,0 +1,37 @@
+	body {
+		background-image: url("img/imagem-spot.jpg");
+		backdrop-filter: blur(1px);
+		margin-left: 10%;
+		margin-right: 10%;
+	}
+	
+	h3 {
+		text-align: center;
+		color: black;
+		background-color: white;
+		padding: 10px;
+	}
+	
+	h4 {
+		text-align: center;
+		color: white;
+		padding-top: 5px;
+	}
+	
+	.cadastroVagas {
+		width: 500px;
+		margin-left: 10%;
+		margin-right: 10%;
+		background-color: #333;
+		padding-left: 30px;
+		padding-right: 30px
+	}
+	
+	#bts-principais {
+		margin: 20px;
+		align-content: center;		
+	}
+	
+	.rodape{
+		padding-top: 10px
+	}
