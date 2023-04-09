@@ -46,7 +46,8 @@ public class EstacionamentoControlador {
 			return ResponseEntity.status(HttpStatus.OK).body(estacionamentoOptional.get());
 		}
 		
-		@GetMapping(value="/buscarPorNome")
+		@GetMapping(value="/bus" +
+				"carPorNome")
 		@ResponseBody
 		public ResponseEntity<List<Estacionamento>> buscarPorNome(@RequestParam(name = "nomeResponsavel") String nomeResponsavel ) {
 			
